@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="50pt"
+            android:text="正在开始测试1" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="150pt"
+            android:layout_height="50pt"
+            android:textSize="30pt"
+            android:text="中断测试" />
+
+    </LinearLayout>
+
+</RelativeLayout>
