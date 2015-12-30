@@ -4,25 +4,41 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="50pt"
-            android:text="正在开始测试1" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="150pt"
             android:layout_height="50pt"
-            android:textSize="30pt"
-            android:text="中断测试" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="中断测试"
+            android:textSize="30pt" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="146pt"
+            android:layout_height="50pt"
+            android:layout_marginLeft="2pt"
+            android:layout_above="@+id/button1"
+            android:layout_alignParentLeft="true"
+            android:textSize="30pt"
+            android:gravity="center"
+            android:background="@color/yellow"
+            android:text="正在测试" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="正在开始测试1"
+            android:textSize="50pt" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

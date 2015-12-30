@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<PreferenceScreen 
+        xmlns:android="http://schemas.android.com/apk/res/android"   
+    android:title="Settings">
+        <PreferenceScreen android:title="系统参数设置">
+            <PreferenceCategory android:title="通信参数">
+                
+                <ListPreference android:title="通信波特率" android:dialogTitle="通信波特率" android:entries="@array/comm_baud_strings" android:entryValues="@array/comm_baud_values"/>
+            </PreferenceCategory>
+            <PreferenceCategory android:title="测试记录参数">
+                <CheckBoxPreference android:title="开启记录"/>
+            </PreferenceCategory>
+        </PreferenceScreen>
+        <PreferenceScreen android:title="测试参数设置">
+            <PreferenceScreen android:title="功率测试参数">
+                <EditTextPreference android:title="最小测试功率"/>
+                <EditTextPreference android:title="最大测试功率"/>
+                <ListPreference android:title="测试时间" android:entries="@array/test_time_strings" android:entryValues="@array/test_time_values"/>
+            </PreferenceScreen>
+            <PreferenceScreen android:title="大小物件测试参数"></PreferenceScreen>
+            <PreferenceScreen android:title="电压变动测试参数"></PreferenceScreen>
+            <PreferenceScreen android:title="高低压保护测试参数"></PreferenceScreen>
+        </PreferenceScreen>  
+ </PreferenceScreen>

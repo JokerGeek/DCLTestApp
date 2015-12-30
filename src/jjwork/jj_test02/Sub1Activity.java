@@ -18,6 +18,7 @@ public class Sub1Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub1);
         
+        
         Button returnBtn = (Button)findViewById(R.id.button1);
         returnBtn.setOnClickListener(new OnClickListener() {
 			

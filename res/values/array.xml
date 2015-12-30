@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+    <resources>
+        <string-array name="comm_baud_values">
+            <item >9600</item>
+            
+            <item >19200</item>
+            <item >38400</item><item>115200</item>
+        </string-array>
+        <string-array name="comm_baud_strings">
+            <item >9600bps</item>
+            <item >19200bps</item>
+            <item >38400bps</item>
+            <item >115200bps</item>
+        </string-array>
+        <string-array name="test_time_strings">
+            <item >1分钟</item>
+            <item >5分钟</item>
+        </string-array>
+        <string-array name="test_time_values">
+            <item >1</item>
+            <item >10</item>
+        </string-array>
+    </resources>

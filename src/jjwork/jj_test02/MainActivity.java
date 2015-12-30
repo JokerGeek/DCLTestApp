@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import jjwork.tools.*;
+
 public class MainActivity extends Activity {
 
     @Override
@@ -16,39 +18,62 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        Button btn1 = (Button)findViewById(R.id.button1);
-        Button btn2 = (Button)findViewById(R.id.button2);
-        Button btn3 = (Button)findViewById(R.id.button3);
-        Button btn4 = (Button)findViewById(R.id.button4);
+        buttonsOnClickInit();
+    }
+    
+    void buttonsOnClickInit() {
+
+        Button test1Btn = (Button)findViewById(R.id.button1);
+        Button test2Btn = (Button)findViewById(R.id.button2);
+        Button test3Btn = (Button)findViewById(R.id.button3);
+        Button test4Btn = (Button)findViewById(R.id.button4);
+
+        Button allTestBtn = (Button)findViewById(R.id.button5);
+        Button settingBtn = (Button)findViewById(R.id.button6);
         
-        btn1.setOnClickListener(new OnClickListener() {			
+        test1Btn.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				if(ButtonTimeout.isFastDoubleClick()) return;
 				startActivity(new Intent(MainActivity.this, Sub1Activity.class));
 			}
 		});
-        btn2.setOnClickListener(new OnClickListener() {			
+        test2Btn.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				if(ButtonTimeout.isFastDoubleClick()) return;
 				startActivity(new Intent(MainActivity.this, Sub2Activity.class));
 			}
 		});
-        btn3.setOnClickListener(new OnClickListener() {			
+        test3Btn.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				if(ButtonTimeout.isFastDoubleClick()) return;
 				startActivity(new Intent(MainActivity.this, Sub3Activity.class));
 			}
 		});
-        btn4.setOnClickListener(new OnClickListener() {			
+        test4Btn.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				if(ButtonTimeout.isFastDoubleClick()) return;
 				startActivity(new Intent(MainActivity.this, Sub4Activity.class));
 			}
 		});
+        
+        allTestBtn.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				if(ButtonTimeout.isFastDoubleClick()) return;
+				startActivity(new Intent(MainActivity.this, Sub1Activity.class));
+			}
+		});
+        
+        settingBtn.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				if(ButtonTimeout.isFastDoubleClick()) return;
+				startActivity(new Intent(MainActivity.this, SettingActivity.class));
+			}
+		});
     }
-    
 }
