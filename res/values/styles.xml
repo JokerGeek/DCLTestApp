@@ -17,5 +17,6 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     <color name="yellow">#FFD700</color>
+    <color name="green">#CCE8CF</color>
 
 </resources>

@@ -5,7 +5,7 @@
         <PreferenceScreen android:title="系统参数设置" android:key="sys_parameters_setting">
             <PreferenceCategory android:title="通信参数" android:key="comm_parameters">
                 
-                <ListPreference android:title="通信波特率" android:summary="点击修改通信波特率"  android:dialogTitle="选择通信波特率" android:entries="@array/comm_baud_strings" android:entryValues="@array/comm_baud_values" android:defaultValue="9600" android:key="comm_baud_list"/>
+                <ListPreference android:title="通信波特率" android:summary="点击修改通信波特率"  android:dialogTitle="选择通信波特率" android:entries="@array/comm_baud_strings" android:entryValues="@array/comm_baud_values" android:defaultValue="115200" android:key="comm_baud_list"/>
             </PreferenceCategory>
             <PreferenceCategory android:title="测试记录参数" android:key="recoder_parameters">
                 <CheckBoxPreference android:title="是否记录测试数据" android:key="recoder_datas_chk" android:defaultValue="false"/>
@@ -16,7 +16,7 @@
             <PreferenceScreen android:title="功率测试参数" android:key="power_test">
                 <EditTextPreference android:title="最小测试功率"  android:numeric="integer" android:summary="点击输入数值" android:key="power_test_power_min" android:defaultValue="1000"/>
                 <EditTextPreference android:title="最大测试功率"  android:numeric="integer" android:summary="点击输入数值" android:key="power_test_power_max" android:defaultValue="2000"/>
-                <ListPreference android:title="测试时间" android:entries="@array/test_time_strings" android:entryValues="@array/test_time_values" android:summary="点击选择测试时间" android:key="power_test_time" android:defaultValue="1"/>
+                <ListPreference android:title="测试时间" android:entries="@array/test_time_strings" android:entryValues="@array/test_time_values" android:summary="点击选择测试时间" android:key="power_test_time" android:defaultValue="3"/>
             </PreferenceScreen>
             <PreferenceScreen android:title="大小物件测试参数" android:key="big_small_objs_test"></PreferenceScreen>
             <PreferenceScreen android:title="电压变动测试参数" android:key="vol_flu_test"></PreferenceScreen>

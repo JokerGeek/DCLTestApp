@@ -9,29 +9,8 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="150pt"
-            android:layout_height="50pt"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:text="中断测试"
-            android:textSize="30pt" />
-
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="146pt"
-            android:layout_height="50pt"
-            android:layout_marginLeft="2pt"
-            android:layout_above="@+id/button1"
-            android:layout_alignParentLeft="true"
-            android:textSize="30pt"
-            android:gravity="center"
-            android:background="@color/yellow"
-            android:text="正在测试" />
-
-        <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/ctlMsg_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -39,6 +18,47 @@
             android:text="正在开始测试1"
             android:textSize="50pt" />
 
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="280pt"
+            android:layout_height="46pt"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="2pt"
+            android:background="@color/yellow"
+            android:gravity="center|left" >
+
+            <TextView
+                android:id="@+id/testState_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5pt"
+                android:text="正在测试（"
+                android:textSize="30pt" />
+
+            <TextView
+                android:id="@+id/timeout_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textSize="30pt" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒）"
+                android:textSize="30pt" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/ret_btn"
+            android:layout_width="150pt"
+            android:layout_height="50pt"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/linearLayout1"
+            android:text="中断测试"
+            android:textSize="30pt" />
     </RelativeLayout>
 
 </RelativeLayout>
