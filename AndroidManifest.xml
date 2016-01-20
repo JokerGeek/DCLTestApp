@@ -27,7 +27,7 @@
         <activity android:name="jjwork.jjtest02.Sub3Activity"></activity>
         <activity android:name="jjwork.jjtest02.Sub4Activity"></activity>
         <activity android:name="jjwork.jjtest02.SettingActivity"></activity>
-        <service  android:name="jjwork.modbus.ModbusService"></service>
+        <service  android:name="jjwork.controller.HardwaveService"></service>
     </application>
 
 </manifest>

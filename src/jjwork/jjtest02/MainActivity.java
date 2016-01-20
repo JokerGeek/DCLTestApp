@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-
-import jjwork.controller.ControllerService;
 import jjwork.jj_test02.R;
 import jjwork.tools.*;
 

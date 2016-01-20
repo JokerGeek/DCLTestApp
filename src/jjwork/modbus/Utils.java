@@ -39,7 +39,7 @@ public class Utils {
 	public static int calculateCRC(byte[] datas, int length) {
 		int crc = 0xffff;
 		for (int i = 0; i < length; i++) {
-			crc = crc ^ datas[i];
+			crc = crc ^ (datas[i] & 0xff);
 			for (int j = 0; j < 8; j++) {
 				int tmp = crc & 1;
 				crc = crc >> 1;

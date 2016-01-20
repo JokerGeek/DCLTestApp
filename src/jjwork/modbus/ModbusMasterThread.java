@@ -38,9 +38,7 @@ public class ModbusMasterThread extends Thread {
 	public void interrupt() {
 		master.close();
 		super.interrupt();
-	}
-	
-	
+	}	
 	@Override
 	public void run() {
 		Looper.prepare();
@@ -51,6 +49,4 @@ public class ModbusMasterThread extends Thread {
 	public Handler getHandler() {
 		return handler;
 	}
-
-
 }

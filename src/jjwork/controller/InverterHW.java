@@ -1,20 +1,23 @@
 package jjwork.controller;
 
-import android.util.Log;
-
 public class InverterHW {
-	public class IHWState{
-		public boolean isOpen;
-		public float outputWork;
-		public IHWState(boolean isOpen, float outputWork) { this.isOpen = isOpen; this.outputWork = outputWork; }
-	}
-	public void open(){ }
-	public void close(){ }
-	public void setInputVoltage(int vol){}
-	public IHWState getState() { return new IHWState(false, 2000); }
+	public final int SLAVE = 1;
+	public final int OPEN_ADDR = 1;
+	public final int CLOSE_ADDR = 2;
+	public final int SET_ADDR = 0;
+	public final int GET_ADDR = 0;
+	public final int GET_LEN = 4;
 	
+	public int[] args = new int[10];
+	public boolean isOpen;
+	public float outputWork;
 
-	private InverterHW(){}	
+	private InverterHW() {
+	}
+
 	private static InverterHW inverterHardwave = new InverterHW();
-	public static InverterHW getInstance() { return inverterHardwave; }
+
+	public static InverterHW getInstance() {
+		return inverterHardwave;
+	}
 }

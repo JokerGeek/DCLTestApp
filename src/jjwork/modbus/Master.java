@@ -21,7 +21,7 @@ public class Master {
 	}
 	
 	public void open() {
-		open(3, 115200, 500);
+		open(3, 9600, 1000);
 	}
 
 	public void open(int com, int baudrate, int readTimeout) {
@@ -72,6 +72,12 @@ public class Master {
 			pdu = Utils.concat(pduHead, outputValues);
 			expectedLength = 8;
 			break;
+		case write_single_register:
+			if (outputValues == null)
+				throw new Exception();
+			pdu = Utils.pack("BHBB", funCode.value(), startAddress, outputValues[0], outputValues[1]);
+			expectedLength = 8;
+			break;
 		default:
 			pdu = new byte[1];
 			break;
@@ -97,7 +103,7 @@ public class Master {
 					int byteCount = byte2;
 					data = Utils.splitArray(responsePDU, 2, responsePDU.length);
 					if (byteCount != data.length)
-						throw new ModbusInvalidResponseError("byte count is "
+						throw new InvalidResponseError("byte count is "
 								+ byteCount
 								+ " while actual number of bytes is "
 								+ data.length + ".");
@@ -121,7 +127,7 @@ public class Master {
 
 	private byte[] recv() throws Exception {
 		byte[] data = serial.recv();
-		if(data == null) throw new ModbusNotConnectedError("Recv error");
+		if(data == null) throw new NotConnectedError("Recv error");
 		Log.d(TAG, Utils.printBytes("Recv:", data));
 		return data;
 	}

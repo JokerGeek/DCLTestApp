@@ -14,7 +14,7 @@ public class SerialPortUtil {
 	private InputStream mInputStream;
 	private ReadThread mReadThread;
 	private String path = "/dev/ttySAC3";
-	private int baudrate = 115200;
+	private int baudrate = 9600;
 	private static SerialPortUtil portUtil = null;
 	private OnDataReceiveListener onDataReceiveListener = null;
 	private boolean isStop = false;

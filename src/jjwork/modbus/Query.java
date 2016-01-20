@@ -26,18 +26,18 @@ public class Query {
 	}
 
 	public byte[] parseResponse(byte[] response)
-			throws ModbusInvalidResponseError {
+			throws InvalidResponseError {
 		if (response.length < 3)
-			throw new ModbusInvalidResponseError("Response length is invalid "
+			throw new InvalidResponseError("Response length is invalid "
 					+ response.length);
 		responseAddress = response[0];
 		if (responseAddress != requestAddress)
-			throw new ModbusInvalidResponseError("Response address "
+			throw new InvalidResponseError("Response address "
 					+ responseAddress + " is different from request address "
 					+ requestAddress);
 		int crc = ((response[response.length-2] << 8) & 0xff00) | (response[response.length - 1] & 0xff);
 		if (Utils.calculateCRC(response, response.length - 2) != crc)
-			throw new ModbusInvalidResponseError("Invalid CRC in response. CRC=" + String.format("0x%04x", crc));
+			throw new InvalidResponseError("Invalid CRC in response. CRC=" + String.format("0x%04x", crc));
 		return Utils.splitArray(response, 1, response.length - 2);
 	}
 
