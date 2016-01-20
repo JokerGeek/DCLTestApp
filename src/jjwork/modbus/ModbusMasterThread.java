@@ -23,7 +23,7 @@ public class ModbusMasterThread extends Thread {
 					if(pag.data == null)
 						data = master.execute(pag.slave, pag.funcode, pag.startAddress, pag.quantity);
 					else 
-						data = master.execute(pag.slave, pag.funcode, pag.startAddress, pag.data.length, pag.data);
+						data = master.execute(pag.slave, pag.funcode, pag.startAddress, pag.data);
 
 					serviceHandler.sendMessage(serviceHandler.obtainMessage(EXECUTE_SUCCESS, data));
 

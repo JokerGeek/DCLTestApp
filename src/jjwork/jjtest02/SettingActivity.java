@@ -2,6 +2,7 @@ package jjwork.jjtest02;
 
 import jjwork.jj_test02.R;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;

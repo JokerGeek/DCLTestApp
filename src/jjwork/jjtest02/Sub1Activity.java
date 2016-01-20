@@ -102,7 +102,10 @@ public class Sub1Activity extends Activity {
 
 	void testFinish() {
 
-		ctlMsgTv.setText("测试结果:产品合格\n");
+		ctlMsgTv.setText("");
+		testStateTv.setText("测试结束（");
+		llayout.setBackgroundColor(Color.GREEN);
+		returnBtn.setEnabled(false);
 		
 		
 		hwService.getBoostParam(new OnUICallback() {			
@@ -116,20 +119,18 @@ public class Sub1Activity extends Activity {
 			@Override
 			public void callback(Object obj) {
 				InverterHW inverter = (InverterHW) obj;
-				ctlMsgTv.append("输入功率:" + inverter.args[2] + "W");
+				ctlMsgTv.append("输入功率:" + inverter.args[2] + "W\n");
+				ctlMsgTv.append("测试结果:产品合格");
 			}
 		});
 		
-		testStateTv.setText("测试结束（");
-		llayout.setBackgroundColor(Color.GREEN);
-		returnBtn.setEnabled(false);
 
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				finish();
 			}
-		}, 5000);
+		}, 8000);
 	}
 
 	Handler handler = new Handler();

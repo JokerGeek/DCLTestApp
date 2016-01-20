@@ -46,6 +46,8 @@ public final class R {
         public static final int activity_sub2=0x7f030002;
         public static final int activity_sub3=0x7f030003;
         public static final int activity_sub4=0x7f030004;
+        public static final int pref_big_fontsize=0x7f030005;
+        public static final int pref_med_fontsize=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f060000;

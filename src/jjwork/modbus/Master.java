@@ -21,7 +21,7 @@ public class Master {
 	}
 	
 	public void open() {
-		open(3, 9600, 1000);
+		open(3, 9600, 1500);
 	}
 
 	public void open(int com, int baudrate, int readTimeout) {
@@ -30,7 +30,6 @@ public class Master {
 			comPort = com;
 			this.baudrate = baudrate;
 			serial.setReadTimeout(readTimeout);
-
 		}
 	}
 
@@ -43,6 +42,9 @@ public class Master {
 	public byte[] execute(int slave, Function funCode, int startAddress,
 			int quantity) throws Exception {
 		return execute(slave, funCode, startAddress, quantity, null);
+	}
+	public byte[] execute(int slave, Function funCode, int startAddress, byte[] outputValues) throws Exception {
+		return execute(slave, funCode, startAddress, outputValues.length, outputValues);
 	}
 
 	public byte[] execute(int slave, Function funCode, int startAddress,

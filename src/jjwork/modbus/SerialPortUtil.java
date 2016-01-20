@@ -20,7 +20,7 @@ public class SerialPortUtil {
 	private boolean isStop = false;
 	private int readTimeout = 10;
 
-	private final int readDataInterval = 10;
+	private final int readDataInterval = 5;
 	private byte[] recvBuffer = new byte[512];
 	private int recvIndex = 0;
 
