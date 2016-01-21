@@ -1,25 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?>  
-<PreferenceScreen 
-        xmlns:android="http://schemas.android.com/apk/res/android"   
-    android:title="Settings">
-        <PreferenceScreen android:title="系统参数设置" android:key="sys_parameters_setting"  android:layout="@layout/pref_big_fontsize">
-            <PreferenceCategory  android:layout="@layout/pref_med_fontsize" android:title="通信参数" android:key="comm_parameters">
-                
-                <ListPreference   android:layout="@layout/pref_big_fontsize" android:title="通信波特率" android:summary="点击修改通信波特率"  android:dialogTitle="选择通信波特率" android:entries="@array/comm_baud_strings" android:entryValues="@array/comm_baud_values" android:defaultValue="115200" android:key="comm_baud_list"/>
-            </PreferenceCategory>
-            <PreferenceCategory  android:layout="@layout/pref_med_fontsize" android:title="测试记录参数" android:key="recoder_parameters">
-                <CheckBoxPreference   android:layout="@layout/pref_big_fontsize" android:title="是否记录测试数据" android:key="recoder_datas_chk" android:defaultValue="false"/>
-                <ListPreference   android:layout="@layout/pref_big_fontsize" android:title="记录数据数量" android:entries="@array/record_max_number_strings" android:defaultValue="50" android:entryValues="@array/record_max_number_values" android:key="recoder_max_list"/>
-            </PreferenceCategory>
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings" >
+
+    <PreferenceScreen
+        android:key="sys_parameters_setting"
+        android:layout="@layout/pref_big_fontsize"
+        android:title="系统参数设置" >
+        <PreferenceCategory
+            android:key="comm_parameters"
+            android:layout="@layout/pref_med_fontsize"
+            android:title="通信参数" >
+            <ListPreference
+                android:defaultValue="115200"
+                android:dialogTitle="选择通信波特率"
+                android:entries="@array/comm_baud_strings"
+                android:entryValues="@array/comm_baud_values"
+                android:key="comm_baud_list"
+                android:layout="@layout/pref_big_fontsize"
+                android:summary="点击修改通信波特率"
+                android:title="通信波特率" />
+        </PreferenceCategory>
+        <PreferenceCategory
+            android:key="recoder_parameters"
+            android:layout="@layout/pref_med_fontsize"
+            android:title="测试记录参数" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="recoder_datas_chk"
+                android:layout="@layout/pref_big_fontsize"
+                android:title="是否记录测试数据" />
+
+            <ListPreference
+                android:defaultValue="50"
+                android:entries="@array/record_max_number_strings"
+                android:entryValues="@array/record_max_number_values"
+                android:key="recoder_max_list"
+                android:layout="@layout/pref_big_fontsize"
+                android:title="记录数据数量" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="test_parameters_setting"
+        android:layout="@layout/pref_big_fontsize"
+        android:title="测试参数设置" >
+        <PreferenceScreen
+            android:key="power_test"
+            android:layout="@layout/pref_big_fontsize"
+            android:title="功率测试参数" >
+            <EditTextPreference
+                android:defaultValue="1000"
+                android:key="power_test_power_min"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="最小测试功率" />
+            <EditTextPreference
+                android:defaultValue="2000"
+                android:key="power_test_power_max"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="最大测试功率" />
+
+            <ListPreference
+                android:defaultValue="3"
+                android:entries="@array/test_time_strings"
+                android:entryValues="@array/test_time_values"
+                android:key="power_test_time"
+                android:layout="@layout/pref_big_fontsize"
+                android:summary="点击选择测试时间"
+                android:title="测试时间" />
         </PreferenceScreen>
-        <PreferenceScreen   android:layout="@layout/pref_big_fontsize" android:title="测试参数设置" android:key="test_parameters_setting">
-            <PreferenceScreen   android:layout="@layout/pref_big_fontsize" android:title="功率测试参数" android:key="power_test">
-                <EditTextPreference   android:layout="@layout/pref_big_fontsize" android:title="最小测试功率"  android:numeric="integer" android:summary="点击输入数值" android:key="power_test_power_min" android:defaultValue="1000"/>
-                <EditTextPreference   android:layout="@layout/pref_big_fontsize" android:title="最大测试功率"  android:numeric="integer" android:summary="点击输入数值" android:key="power_test_power_max" android:defaultValue="2000"/>
-                <ListPreference   android:layout="@layout/pref_big_fontsize" android:title="测试时间" android:entries="@array/test_time_strings" android:entryValues="@array/test_time_values" android:summary="点击选择测试时间" android:key="power_test_time" android:defaultValue="3"/>
-            </PreferenceScreen>
-            <PreferenceScreen   android:layout="@layout/pref_big_fontsize" android:title="大小物件测试参数" android:key="big_small_objs_test"></PreferenceScreen>
-            <PreferenceScreen   android:layout="@layout/pref_big_fontsize" android:title="电压变动测试参数" android:key="vol_flu_test"></PreferenceScreen>
-            <PreferenceScreen   android:layout="@layout/pref_big_fontsize" android:title="高低压保护测试参数" android:key="high_low_vol_protect_test"></PreferenceScreen>
-        </PreferenceScreen>  
- </PreferenceScreen>
+        <PreferenceScreen
+            android:key="big_small_objs_test"
+            android:layout="@layout/pref_big_fontsize"
+            android:title="大小物件测试参数" >
+            <EditTextPreference
+                android:defaultValue="1000"
+                android:key="objs_test_r"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="电阻" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="vol_flu_test"
+            android:layout="@layout/pref_big_fontsize"
+            android:title="电压变动测试参数" >
+            <EditTextPreference
+                android:defaultValue="220"
+                android:key="vol_ful_test_vol_max"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="最大测试电压" />
+            <EditTextPreference
+                android:defaultValue="180"
+                android:key="vol_ful_test_vol_min"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="最小测试电压" />
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="high_low_vol_protect_test"
+            android:layout="@layout/pref_big_fontsize"
+            android:title="高低压保护测试参数" >
+            <EditTextPreference
+                android:defaultValue="220"
+                android:key="vol_protect_test_vol_max"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="最大测试电压" />
+            <EditTextPreference
+                android:defaultValue="180"
+                android:key="vol_protect_test_vol_min"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:summary="点击输入数值"
+                android:title="最小测试电压" />
+        </PreferenceScreen>
+    </PreferenceScreen>
+
+</PreferenceScreen>

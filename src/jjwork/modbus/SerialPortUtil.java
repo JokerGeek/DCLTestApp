@@ -14,13 +14,13 @@ public class SerialPortUtil {
 	private InputStream mInputStream;
 	private ReadThread mReadThread;
 	private String path = "/dev/ttySAC3";
-	private int baudrate = 9600;
+	private int baudrate = 115200;
 	private static SerialPortUtil portUtil = null;
 	private OnDataReceiveListener onDataReceiveListener = null;
 	private boolean isStop = false;
 	private int readTimeout = 10;
 
-	private final int readDataInterval = 5;
+	private final int readDataInterval = 10;
 	private byte[] recvBuffer = new byte[512];
 	private int recvIndex = 0;
 

@@ -54,6 +54,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20pt"
                 android:textSize="50pt"
             android:text="自动测试和设置" />
 
@@ -74,6 +75,13 @@
                 android:layout_height="50pt"
                 android:textSize="30pt"
                 android:text="设置" />
+            
+            <Button
+                android:id="@+id/button7"
+                android:layout_width="200pt"
+                android:layout_height="50pt"
+                android:textSize="30pt"
+                android:text="导出记录" />
 
         </LinearLayout>
         
