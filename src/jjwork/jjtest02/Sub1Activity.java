@@ -19,6 +19,7 @@ import android.widget.TextView;
 import jjwork.controller.*;
 import jjwork.controller.HardwaveBinder.OnUICallback;
 import jjwork.jj_test02.R;
+import jjwork.tools.TestRecordService;
 
 public class Sub1Activity extends Activity {
 
@@ -121,6 +122,9 @@ public class Sub1Activity extends Activity {
 				InverterHW inverter = (InverterHW) obj;
 				ctlMsgTv.append("输入功率:" + inverter.args[2] + "W\n");
 				ctlMsgTv.append("测试结果:产品合格");
+				
+				TestRecordService recordService = TestRecordService.getInstance();
+				recordService.recordPowerTest(Sub1Activity.this, testMinWork, inverter.args[2], true);
 			}
 		});
 		
