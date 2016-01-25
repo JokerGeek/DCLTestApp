@@ -126,7 +126,11 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				if (ButtonTimeout.isFastDoubleClick())
 					return;
-				Log.d("Modbus Ac", getExternalStorageDirectory());
+				String externalPaths = getExternalStorageDirectory();
+				if(!externalPaths.equals("/mnt/sdcard\n")){
+					String[] paths = externalPaths.split("\n");
+					TestRecordService.ExportToCSV(MainActivity.this, paths[1]);		
+				}
 				
 			}
 		});
@@ -162,7 +166,7 @@ public class MainActivity extends Activity {
 	            }
 	        }
 	    } catch (Exception e) {
-	        Log.d("Mo Ac", e.toString());
+	        Log.d("Mo Ac", "error " + e.toString());
 	    }
 	    return dir;
 	}
