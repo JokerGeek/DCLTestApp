@@ -27,78 +27,58 @@
 #include <jni.h>
 
 #include "android/log.h"
-static const char *TAG = "serial_port";
+
+const char *TAG = "serial_port";
+const char* kClassName = "jjwork/modbus/SerialPort"; //指定要注册的类
+
+static int max485_ctrl_fd = 0;
+
 #define LOGI(fmt, args...) __android_log_print(ANDROID_LOG_INFO,  TAG, fmt, ##args)
 #define LOGD(fmt, args...) __android_log_print(ANDROID_LOG_DEBUG, TAG, fmt, ##args)
 #define LOGE(fmt, args...) __android_log_print(ANDROID_LOG_ERROR, TAG, fmt, ##args)
 
+struct baud_map{
+	int baud;
+	speed_t speed;
+};
+
+//{.baud = 4800, .speed = B4800},
+//{.baud = 9600, .speed = B9600},
+//{.baud = 19200, .speed = B19200},
+//{.baud = 38400, .speed = B38400},
+//{.baud = 57600, .speed = B57600},
+//{.baud = 115200, .speed = B115200},
+//{.baud = 230400, .speed = B230400},
+//{.baud = 460800, .speed = B460800},
+//{.baud = 500000, .speed = B500000},
+//{.baud = 576000, .speed = B576000},
+//{.baud = 921600, .speed = B921600},
+//{.baud = 1000000, .speed = B1000000},
+//{.baud = 1152000, .speed = B1152000},
+struct baud_map baud_maps[] = {
+		{ 4800, B4800},
+		{ 9600, B9600},
+		{ 19200, B19200},
+		{ 38400, B38400},
+		{ 57600, B57600},
+		{ 115200, B115200},
+		{ 230400, B230400},
+		{ 460800, B460800},
+		{ 500000, B500000},
+		{ 576000, B576000},
+		{ 921600, B921600},
+		{ 1000000, B1000000},
+		{ 1152000, B1152000},
+};
+
+
 static speed_t getBaudrate(jint baudrate) {
-	switch (baudrate) {
-	case 0:
-		return B0;
-	case 50:
-		return B50;
-	case 75:
-		return B75;
-	case 110:
-		return B110;
-	case 134:
-		return B134;
-	case 150:
-		return B150;
-	case 200:
-		return B200;
-	case 300:
-		return B300;
-	case 600:
-		return B600;
-	case 1200:
-		return B1200;
-	case 1800:
-		return B1800;
-	case 2400:
-		return B2400;
-	case 4800:
-		return B4800;
-	case 9600:
-		return B9600;
-	case 19200:
-		return B19200;
-	case 38400:
-		return B38400;
-	case 57600:
-		return B57600;
-	case 115200:
-		return B115200;
-	case 230400:
-		return B230400;
-	case 460800:
-		return B460800;
-	case 500000:
-		return B500000;
-	case 576000:
-		return B576000;
-	case 921600:
-		return B921600;
-	case 1000000:
-		return B1000000;
-	case 1152000:
-		return B1152000;
-	case 1500000:
-		return B1500000;
-	case 2000000:
-		return B2000000;
-	case 2500000:
-		return B2500000;
-	case 3000000:
-		return B3000000;
-	case 3500000:
-		return B3500000;
-	case 4000000:
-		return B4000000;
-	default:
-		return -1;
+	int len = sizeof(baud_maps)/sizeof(baud_maps[0]);
+	for(int i = 0; i < len; i++){
+		if(baudrate == baud_maps[i].baud)
+			return baud_maps[i].speed;
 	}
+	return -1;
 }
 
 /*
@@ -110,6 +90,7 @@ JNIEXPORT jobject JNICALL native_open(JNIEnv *env, jobject thiz, jstring path,ji
 	int fd;
 	speed_t speed;
 	jobject mFileDescriptor;
+
 
 	LOGD("init native Check arguments");
 	/* Check arguments */
@@ -128,7 +109,6 @@ JNIEXPORT jobject JNICALL native_open(JNIEnv *env, jobject thiz, jstring path,ji
 		jboolean iscopy;
 		const char *path_utf = env->GetStringUTFChars(path, &iscopy);
 		LOGD("Opening serial port %s", path_utf);
-//		fd = open(path_utf, O_RDWR | O_DIRECT | O_SYNC);
 	    fd = open(path_utf, O_RDWR | O_NOCTTY | O_NONBLOCK | O_NDELAY);
 		LOGD("open() fd = %d", fd);
 		env->ReleaseStringUTFChars(path, path_utf);
@@ -162,6 +142,7 @@ JNIEXPORT jobject JNICALL native_open(JNIEnv *env, jobject thiz, jstring path,ji
 		}
 	}
 
+
 	/* Create a corresponding file descriptor */
 	{
 		jclass cFileDescriptor = env->FindClass("java/io/FileDescriptor");
@@ -169,6 +150,15 @@ JNIEXPORT jobject JNICALL native_open(JNIEnv *env, jobject thiz, jstring path,ji
 		jfieldID descriptorID = env->GetFieldID(cFileDescriptor,"descriptor", "I");
 		mFileDescriptor = env->NewObject(cFileDescriptor,iFileDescriptor);
 		env->SetIntField(mFileDescriptor, descriptorID, (jint) fd);
+	}
+
+	if(max485_ctrl_fd <= 0)
+		max485_ctrl_fd = open("/dev/max485_ctl_pin", O_RDWR|O_NDELAY|O_NOCTTY);
+	if(max485_ctrl_fd <= 0)
+		LOGD("can't open /dev/max485_ctl_pin");
+	else{
+		LOGD("open /dev/max485_ctl_pin sucess. fd = %d", max485_ctrl_fd);
+		ioctl(max485_ctrl_fd, 0, 0);
 	}
 
 	return mFileDescriptor;
@@ -192,12 +182,30 @@ JNIEXPORT jint JNICALL native_close(JNIEnv * env, jobject thiz)
 
 	LOGD("close(fd = %d)", descriptor);
 	close(descriptor);
+
+	if(max485_ctrl_fd) {
+		close(max485_ctrl_fd);
+		max485_ctrl_fd = 0;
+	}
+
+	return 1;
+}
+JNIEXPORT jint JNICALL max485_set_send(JNIEnv * env, jobject thiz){
+	if(max485_ctrl_fd)
+		ioctl(max485_ctrl_fd, 1, 0);
 	return 1;
 }
 
+JNIEXPORT jint JNICALL max485_set_recv(JNIEnv * env, jobject thiz){
+	if(max485_ctrl_fd)
+		ioctl(max485_ctrl_fd, 0, 0);
+	return 1;
+}
 static JNINativeMethod gMethods[] = {
 		{ "open", "(Ljava/lang/String;I)Ljava/io/FileDescriptor;",(void*) native_open },
 		{ "close", "()I",(void*) native_close },
+		{ "setSend", "()I",(void*) max485_set_send },
+		{ "setRecv", "()I",(void*) max485_set_recv },
 };
 
 /*
@@ -221,7 +229,6 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
  * 为所有类注册本地方法
  */
 static int registerNatives(JNIEnv* env) {
-	const char* kClassName = "jjwork/modbus/SerialPort"; //指定要注册的类
 	return registerNativeMethods(env, kClassName, gMethods,
 			sizeof(gMethods) / sizeof(gMethods[0]));
 }

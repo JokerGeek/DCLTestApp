@@ -17,6 +17,7 @@ public class ModbusMasterThread extends Thread {
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
+				Log.d(TAG,Thread.currentThread().getName());
 				try {
 					ModbusParams pag = (ModbusParams) msg.obj;
 					byte[] data = null;

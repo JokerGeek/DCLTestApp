@@ -40,6 +40,11 @@ public class Sub1Activity extends Activity {
 		
 		uiInit();
 		
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 		bindService(new Intent(this, HardwaveService.class), conn, BIND_AUTO_CREATE);
 	}
 

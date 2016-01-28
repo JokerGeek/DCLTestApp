@@ -36,6 +36,8 @@ public class SerialPort {
 
 	private native FileDescriptor open(String path, int baudrate);
 	public native int close();
+	public native int setSend();
+	public native int setRecv();
 
 	static {
 		System.loadLibrary("serial_port");

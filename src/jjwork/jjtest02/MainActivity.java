@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import jjwork.controller.HardwaveService;
 import jjwork.jj_test02.R;
 import jjwork.tools.*;
 
@@ -29,11 +30,12 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		buttonsOnClickInit();
+//		startService(new Intent(this, HardwaveService.class));
 	}
 
 	@Override
 	protected void onDestroy() {
-
+//		stopService(new Intent(this, HardwaveService.class));
 		super.onDestroy();
 	}
 

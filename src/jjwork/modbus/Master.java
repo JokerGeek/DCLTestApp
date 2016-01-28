@@ -21,7 +21,7 @@ public class Master {
 	}
 	
 	public void open() {
-		open(3, 9600, 1500);
+		open(3, 9600, 1000);
 	}
 
 	public void open(int com, int baudrate, int readTimeout) {
@@ -122,7 +122,7 @@ public class Master {
 		return new Query();
 	}
 
-	public void send(byte[] data) {
+	public void send(byte[] data) throws InterruptedException {
 		Log.d(TAG, Utils.printBytes("Send:", data));
 		serial.send(data);
 	}

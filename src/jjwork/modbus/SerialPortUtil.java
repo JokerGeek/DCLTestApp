@@ -13,7 +13,7 @@ public class SerialPortUtil {
 	private OutputStream mOutputStream;
 	private InputStream mInputStream;
 	private ReadThread mReadThread;
-	private String path = "/dev/ttySAC3";
+	private String path = "/dev/ttySAC1";
 	private int baudrate = 115200;
 	private static SerialPortUtil portUtil = null;
 	private OnDataReceiveListener onDataReceiveListener = null;
@@ -74,11 +74,14 @@ public class SerialPortUtil {
 		return result;
 	}
 
-	public boolean send(byte[] mBuffer) {
+	public boolean send(byte[] mBuffer) throws InterruptedException {
 		boolean result = true;
 		try {
 			if (mOutputStream != null) {
+				mSerialPort.setSend();
 				mOutputStream.write(mBuffer);
+				Thread.sleep(5);
+				mSerialPort.setRecv();
 			} else {
 				result = false;
 			}
@@ -108,13 +111,10 @@ public class SerialPortUtil {
 				try {
 					if (mInputStream == null)
 						return;
-					// byte[] buffer = new byte[256];
 					size = mInputStream.read(recvBuffer, recvIndex, 256);
-					if (size > 0)
+					if (size > 0) {
 						recvIndex += size;
-					// if (size > 0 && null != onDataReceiveListener) {
-					// onDataReceiveListener.onDataReceive(buffer, size);
-					// }
+					}
 					Thread.sleep(readDataInterval);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -25,7 +25,6 @@ public class HardwaveService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		Log.d(TAG, "oncreate");
 
 		serviceHandler = new Handler() {
 			@Override
@@ -41,6 +40,7 @@ public class HardwaveService extends Service {
 		hwbinder = new HardwaveBinder(mbHandler, handlerCallbacks);
 		
 		mbThread.start();
+		Log.d(TAG, "oncreate");
 	}
 
 	@Override
