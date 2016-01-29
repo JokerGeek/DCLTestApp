@@ -78,7 +78,7 @@ static speed_t getBaudrate(jint baudrate) {
 		if(baudrate == baud_maps[i].baud)
 			return baud_maps[i].speed;
 	}
-	return -1;
+	return B1152000;
 }
 
 /*
