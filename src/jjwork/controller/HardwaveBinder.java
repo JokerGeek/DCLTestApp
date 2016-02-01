@@ -58,16 +58,14 @@ public class HardwaveBinder extends Binder {
 				boost.GET_LEN));
 	}
 
-	public void setBoostParam(int arg1, int arg2, int arg3, OnUICallback cb) {
+	public void setBoostParam(int arg1, int arg2, OnUICallback cb) {
 		handlerCallbacks.offer(new HandlerCallback(cb, null));
 		
 		byte[] data = new byte[6];
-		data[0] = (byte)((arg1 >> 8) & 0xff);
-		data[1] = (byte)(arg1 & 0xff);
-		data[2] = (byte)((arg2 >> 8) & 0xff);
-		data[3] = (byte)(arg2 & 0xff);
-		data[4] = (byte)((arg3 >> 8) & 0xff);
-		data[5] = (byte)(arg3 & 0xff);
+		data[2] = (byte)((arg1 >> 8) & 0xff);
+		data[3] = (byte)(arg1 & 0xff);
+		data[4] = (byte)((arg2 >> 8) & 0xff);
+		data[5] = (byte)(arg2 & 0xff);
 		
 		sendMessage(new ModbusParams(
 				boost.SLAVE, 
@@ -75,8 +73,8 @@ public class HardwaveBinder extends Binder {
 				boost.SET_ADDR, 
 				data));
 	}
-	public void setBoostParam(int arg1, int arg2, int arg3) {
-		setBoostParam(arg1, arg2, arg3, null);
+	public void setBoostParam(int arg1, int arg2) {
+		setBoostParam(arg1, arg2, null);
 	}
 
 	public void openInverter() {

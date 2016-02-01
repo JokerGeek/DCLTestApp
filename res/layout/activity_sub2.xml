@@ -5,24 +5,54 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="100pt"
             android:layout_height="wrap_content"
-            android:textSize="50pt"
-            android:text="正在开始测试2" />
+            android:inputType="number" 
+        android:textSize="30pt" >
+
+        </EditText>
 
         <Button
-            android:id="@+id/button1"
-            android:layout_width="150pt"
-            android:layout_height="50pt"
-            android:textSize="30pt"
-            android:text="中断测试" />
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="设置电压" 
+        android:textSize="30pt" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:textSize="30pt" 
+            android:text="获取数据" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:text="正在开始测试2"
+        android:textSize="50pt" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="150pt"
+        android:layout_height="50pt"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="中断测试"
+        android:textSize="30pt" />
 
 </RelativeLayout>

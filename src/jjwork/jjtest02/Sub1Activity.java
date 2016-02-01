@@ -23,7 +23,7 @@ import jjwork.tools.TestRecordService;
 
 public class Sub1Activity extends Activity {
 
-	int workingVol = 220;
+	int workingVol, workingHz;
 	int testMinWork, testMaxWork, testTimeout;
 	
 	TextView ctlMsgTv, timeoutTv, testStateTv;
@@ -40,26 +40,22 @@ public class Sub1Activity extends Activity {
 		
 		uiInit();
 		
-	}
-	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
 		bindService(new Intent(this, HardwaveService.class), conn, BIND_AUTO_CREATE);
 	}
-
 	private void testParamsInit() {
 		SharedPreferences sharePrefs = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		String minWork = sharePrefs.getString("power_test_power_min", "");
 		String maxWork = sharePrefs.getString("power_test_power_max", "");
 		String testTime = sharePrefs.getString("power_test_time", "");
-		
+		String testVol = sharePrefs.getString("power_test_vol", "220");
+		String testHz = sharePrefs.getString("power_test_hz", "50");
 
 		testMinWork = Integer.parseInt(minWork);
 		testMaxWork = Integer.parseInt(maxWork);
 		testTimeout = Integer.parseInt(testTime);
-		
+		workingVol = Integer.parseInt(testVol);
+		workingHz = Integer.parseInt(testHz);		
 	}
 	private void uiInit() {
 		ctlMsgTv = (TextView) findViewById(R.id.ctlMsg_tv);
@@ -72,7 +68,7 @@ public class Sub1Activity extends Activity {
 		ctlMsgTv.append("\n请设置电磁炉功率为" + testMinWork + "W");
 		returnBtn.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View arg0) {
+			public void onClick(View v) {
 				Sub1Activity.this.finish();
 			}
 		});
@@ -86,9 +82,9 @@ public class Sub1Activity extends Activity {
 		public void onServiceConnected(ComponentName arg0, IBinder binder) {
 			hwService = (HardwaveBinder) binder;
 			
-			hwService.setBoostParam(0, testMinWork, testMaxWork);
+			hwService.setBoostParam(0, testMinWork);
 			hwService.openBoost();			
-			hwService.setInverterParam(0, workingVol);
+			hwService.setInverterParam(workingVol, workingHz);
 			hwService.openInverter();
 		}
 	};
@@ -98,7 +94,8 @@ public class Sub1Activity extends Activity {
 		hwService.closeInverter();
 		unbindService(conn);
 	}
-
+	
+	
 	@Override
 	protected void onPause() {
 		closeDisplayTimeout();
@@ -125,7 +122,8 @@ public class Sub1Activity extends Activity {
 			@Override
 			public void callback(Object obj) {
 				InverterHW inverter = (InverterHW) obj;
-				ctlMsgTv.append("输入功率:" + inverter.args[2] + "W\n");
+				ctlMsgTv.append("输入电压:" + (double)inverter.args[2]/10 + "W\n");
+				ctlMsgTv.append("输入电流:" + (double)inverter.args[3]/10 + "W\n");
 				ctlMsgTv.append("测试结果:产品合格");
 				
 				TestRecordService recordService = TestRecordService.getInstance();
@@ -139,7 +137,7 @@ public class Sub1Activity extends Activity {
 			public void run() {
 				finish();
 			}
-		}, 8000);
+		}, 10000);
 	}
 
 	Handler handler = new Handler();

@@ -8,13 +8,14 @@ import java.io.OutputStream;
 import android.util.Log;
 
 public class SerialPortUtil {
+	public final static String COM1 = "/dev/ttySAC1";
+	public final static String COM3 = "/dev/ttySAC3";
+	
 	private String TAG = "Modbus Serial";
 	private SerialPort mSerialPort;
 	private OutputStream mOutputStream;
 	private InputStream mInputStream;
 	private ReadThread mReadThread;
-	private String path = "/dev/ttySAC1";
-	private int baudrate = 115200;
 	private static SerialPortUtil portUtil = null;
 	private OnDataReceiveListener onDataReceiveListener = null;
 	private boolean isStop = false;
@@ -33,19 +34,14 @@ public class SerialPortUtil {
 		onDataReceiveListener = dataReceiveListener;
 	}
 
-	public static SerialPortUtil getInstance() {
-		if (portUtil == null)
-			portUtil = new SerialPortUtil();
-		return portUtil;
-	}
 
 	public void setReadTimeout(int timeoutMs) {
 		readTimeout = timeoutMs;
 	}
 
-	private SerialPortUtil() {
+	public SerialPortUtil(String com, int baudrate) {
 		try {
-			mSerialPort = new SerialPort(new File(path), baudrate);
+			mSerialPort = new SerialPort(new File(com), baudrate);
 			mOutputStream = mSerialPort.getOutputStream();
 			mInputStream = mSerialPort.getInputStream();
 
@@ -77,16 +73,13 @@ public class SerialPortUtil {
 	public boolean send(byte[] mBuffer) throws InterruptedException {
 		boolean result = true;
 		try {
-			if (mOutputStream != null) {
-				mSerialPort.setSend();
-				mOutputStream.write(mBuffer);
-				Thread.sleep(5);
-				mSerialPort.setRecv();
-			} else {
-				result = false;
-			}
+			if (mOutputStream == null) return false;
+			
+			mSerialPort.setSend();
+			mOutputStream.write(mBuffer);
+			Thread.sleep(5);
+			mSerialPort.setRecv();
 		} catch (IOException e) {
-			e.printStackTrace();
 			result = false;
 		}
 		return result;
@@ -94,8 +87,7 @@ public class SerialPortUtil {
 
 	public byte[] recv() throws InterruptedException {
 		Thread.sleep(readTimeout);
-		if (recvIndex == 0)
-			return null;
+		if (recvIndex == 0) return null;
 		byte[] data = new byte[recvIndex];
 		System.arraycopy(recvBuffer, 0, data, 0, recvIndex);
 		recvIndex = 0;

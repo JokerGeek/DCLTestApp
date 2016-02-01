@@ -8,6 +8,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
+import jjwork.modbus.Utils;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,6 +36,28 @@ public class TestRecordService{
 	    cv.put("data_time", formatter.format(curDate));
 	    
 	    db.insert("power_test", null, cv);
+	    db.close();
+	}
+	
+	public static Context errorContext;
+	public static void recordError(byte[] sendData, Exception ex, byte[] recvData){
+		if(errorContext == null) return;
+		TestDataDBHelper dbHelper = new TestDataDBHelper(errorContext);
+	    SQLiteDatabase db =	dbHelper.getWritableDatabase();
+
+	    ContentValues cv = new ContentValues();
+	    SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss"); 
+	    Date curDate = new Date(System.currentTimeMillis());//获取当前时间 
+	    cv.put("data_time", formatter.format(curDate));
+	    
+	    if(sendData != null)
+	    	cv.put("send_data", Utils.printBytes(sendData));
+	    if(recvData != null)
+	    	cv.put("recv_data", Utils.printBytes(recvData));
+	    
+	    cv.put("exception", ex.toString());
+	    
+	    db.insert("comm_err", null, cv);
 	    db.close();
 	}
 	

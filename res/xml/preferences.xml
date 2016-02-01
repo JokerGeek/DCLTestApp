@@ -63,13 +63,26 @@
                 android:title="最大测试功率" />
 
             <ListPreference
-                android:defaultValue="3"
+                android:defaultValue="5"
                 android:entries="@array/test_time_strings"
                 android:entryValues="@array/test_time_values"
                 android:key="power_test_time"
                 android:layout="@layout/pref_big_fontsize"
                 android:summary="点击选择测试时间"
                 android:title="测试时间" />
+
+            <EditTextPreference
+                android:defaultValue="220"
+                android:layout="@layout/pref_big_fontsize"
+                android:key="power_test_vol"
+                android:numeric="integer"
+                android:title="电磁炉输入电压" />
+            <EditTextPreference
+                android:defaultValue="50"
+                android:key="power_test_hz"
+                android:layout="@layout/pref_big_fontsize"
+                android:numeric="integer"
+                android:title="电磁炉输入电压频率" />
         </PreferenceScreen>
         <PreferenceScreen
             android:key="big_small_objs_test"

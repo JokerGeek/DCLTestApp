@@ -34,11 +34,13 @@ public final class R {
         public static final int button6=0x7f090007;
         public static final int button7=0x7f090008;
         public static final int ctlMsg_tv=0x7f090009;
+        public static final int editText1=0x7f09000e;
         public static final int linearLayout1=0x7f09000a;
         public static final int ret_btn=0x7f09000d;
         public static final int testState_tv=0x7f09000b;
         public static final int textView1=0x7f090000;
         public static final int textView2=0x7f090005;
+        public static final int textView3=0x7f09000f;
         public static final int timeout_tv=0x7f09000c;
     }
     public static final class layout {

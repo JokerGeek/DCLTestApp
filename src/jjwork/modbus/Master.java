@@ -3,40 +3,33 @@ package jjwork.modbus;
 import android.util.Log;
 
 public class Master {
-	String TAG = "Modbus master";
-	SerialPortUtil serial = SerialPortUtil.getInstance();
-	boolean isOpen = false;
-	int baudrate = 0;
-	int comPort = 0;
+	private final static String TAG = "Modbus master";
+	private SerialPortUtil serial;
+	private boolean isOpen = false;
+	private int baudrate = 115200;
+	private int comPort = 0;
+	private int resendcount = 1;
 
-	private static Master modbusMaster = null;
 
-	public static Master getInstance() {
-		if(modbusMaster == null)
-			modbusMaster = new Master();
-		return modbusMaster;
+	public Master(int com, int baudrate, int readTimeout) {
+		comPort = com;
+		this.baudrate = baudrate;
+		serial = new SerialPortUtil(SerialPortUtil.COM1, 19200);
+		serial.setReadTimeout(readTimeout);
 	}
-
-	private Master() {
+	public void setBaudRate(int baud){
+		this.baudrate = baud;
 	}
 	
 	public void open() {
-		open(3, 9600, 1000);
-	}
-
-	public void open(int com, int baudrate, int readTimeout) {
 		if (!isOpen) {
-			isOpen = true;
-			comPort = com;
-			this.baudrate = baudrate;
-			serial.setReadTimeout(readTimeout);
+			isOpen = true;	
 		}
 	}
-
+	
 	public void close() {
 		serial.close();
 		isOpen = false;
-		modbusMaster = null;
 	}
 
 	public byte[] execute(int slave, Function funCode, int startAddress,
@@ -88,34 +81,42 @@ public class Master {
 		Query query = makeQuery();
 		byte[] request = query.buildRequest(pdu, slave);
 
-		send(request);
+		byte[] response = null;
+		// 接收失败重复发送
+		for(int i = 0; i < resendcount; i++){
+			send(request);
+			_sendData = request;
 
-		if (slave != 0) {
-
-			byte[] response = recv();
-
-			byte[] responsePDU = query.parseResponse(response);
-			int returnCode = responsePDU[0];
-			int byte2 = responsePDU[1];
-			if (returnCode > 0x80) {
-				// error
-			} else {
-				byte[] data;
-				if (isReadFunction) {
-					int byteCount = byte2;
-					data = Utils.splitArray(responsePDU, 2, responsePDU.length);
-					if (byteCount != data.length)
-						throw new InvalidResponseError("byte count is "
-								+ byteCount
-								+ " while actual number of bytes is "
-								+ data.length + ".");
-				} else {
-					data = Utils.splitArray(responsePDU, 1, responsePDU.length);
-				}
-				return data;
-			}
+			if (slave == 0) return null;
+			
+			response = recv();
+			if(response != null) break;
 		}
-		return null;
+		if(response == null)
+			throw new NotConnectedError("Recv error");
+		
+		_recvData = response;
+		
+		byte[] responsePDU = query.parseResponse(response);
+		int returnCode = responsePDU[0];
+		int byte2 = responsePDU[1];
+		
+		if (returnCode > 0x80) {
+			throw new ModbusError(byte2);
+		} 
+		
+		if (!isReadFunction)
+			return Utils.splitArray(responsePDU, 1, responsePDU.length);
+		
+		// isReadFunction == true
+		int byteCount = byte2;
+		byte[] data = Utils.splitArray(responsePDU, 2, responsePDU.length);
+		if (byteCount != data.length)
+			throw new InvalidResponseError("byte count is " + byteCount
+					+ " while actual number of bytes is " + data.length);
+		return data;
+		
+		
 	}
 
 	private Query makeQuery() {
@@ -129,11 +130,18 @@ public class Master {
 
 	private byte[] recv() throws Exception {
 		byte[] data = serial.recv();
-		if(data == null) throw new NotConnectedError("Recv error");
+		if(data == null) return null;
 		Log.d(TAG, Utils.printBytes("Recv:", data));
 		return data;
 	}
-
+	// test
+	byte[] _sendData, _recvData;
+	public byte[] getSendData() {
+		return _sendData;
+	}
+	public byte[] getRecvData(){
+		return _recvData;
+	}
 	public interface OnModbusRecvDataListener {
 		void modbusRecvDataListener(byte[] retDatas);
 	}

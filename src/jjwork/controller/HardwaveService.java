@@ -36,10 +36,12 @@ public class HardwaveService extends Service {
 			}
 		};
 		mbThread = new ModbusMasterThread(serviceHandler);
+		mbThread.start();
+		
 		mbHandler = mbThread.getHandler();
+		
 		hwbinder = new HardwaveBinder(mbHandler, handlerCallbacks);
 		
-		mbThread.start();
 		Log.d(TAG, "oncreate");
 	}
 
