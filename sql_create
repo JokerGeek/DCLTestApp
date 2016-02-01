@@ -1,0 +1,10 @@
+databases name:dcl_test
+table:power_test big_obj_test small_obj_test vol_flu_test high_vol_protect_test low_vol_protect_test comm_err
+
+comm_err create table sql:
+create table comm_err(id integer primary key autoincrement, data_time varchar(20), send_data varchar(48), recv_data varchar(64), exception varchar(64));
+
+adb shell:
+sqlite3 data/data/jjwork.jj_test02/databases/dcl_test
+
+drop table comm_err;
